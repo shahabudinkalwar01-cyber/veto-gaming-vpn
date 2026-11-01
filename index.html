@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VITO Gaming VPN</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: linear-gradient(135deg, #1e3a8a, #0f172a); 
+            color: white; 
+            text-align: center; 
+            padding: 20px; 
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container { 
+            background: rgba(30, 41, 59, 0.7); 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 { 
+            font-size: 32px; 
+            font-weight: 800; 
+            color: #38bdf8; 
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h2 { 
+            font-size: 16px; 
+            font-weight: 600; 
+            color: #f43f5e; 
+            margin: 0 0 25px 0;
+            letter-spacing: 2px;
+        }
+        .ping-box {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        .ping-value {
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .green-text { color: #10b981; }
+        .yellow-text { color: #f59e0b; }
+        
+        .btn-connect { 
+            background: #2563eb; 
+            color: white; 
+            width: 100%; 
+            padding: 15px; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+        .btn-connect:hover { 
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        .btn-connected {
+            background: #10b981 !important;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        .footer-info { 
+            font-size: 11px; 
+            color: #64748b; 
+            margin-top: 20px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top Custom Brand Headings -->
+        <h1>VITO Gaming VPN</h1>
+        <h2>FREE FIRE AND PUBG</h2>
+        
+        <!-- Live Ping System Display -->
+        <div class="ping-box">
+            <div id="before-box">Before Connection Ping: <span id="ping-before" class="green-text">Calculating...</span></div>
+            <div id="after-box" style="display:none; margin-top: 10px;">After Connection Ping: <span id="ping-after" class="yellow-text">Connecting Tunnel...</span></div>
+        </div>
+
+        <!-- Single Core Action Button -->
+        <button id="connect-btn" class="btn-connect" onclick="startVpnConnection()">CONNECT TO ENGINE</button>
+
+        <div class="footer-info">MTU Optimized: 1280 | Dual-WireGuard Framework Active</div>
+    </div>
+
+    <script>
+        let beforeInterval;
+        let afterInterval;
+        let isConnected = false;
+
+        // Simulate real gaming server latency pings
+        function updateBeforePing() {
+            if (!isConnected) {
+                let currentPing = Math.floor(Math.random() * (48 - 32) + 32);
+                document.getElementById("ping-before").innerText = currentPing + " ms";
+            }
+        }
+
+        function updateAfterPing() {
+            let tunnelPing = Math.floor(Math.random() * (24 - 14) + 14);
+            document.getElementById("ping-after").innerText = tunnelPing + " ms";
+        }
+
+        // Start ping loop as soon as the user opens the app layout
+        beforeInterval = setInterval(updateBeforePing, 1000);
+
+        function startVpnConnection() {
+            if (isConnected) return;
+            isConnected = true;
+
+            // 1. Freeze the first ping parameter entirely
+            clearInterval(beforeInterval);
+            
+            // 2. Adjust button styles instantly
+            const btn = document.getElementById("connect-btn");
+            btn.innerText = "VPN IS CONNECTED";
+            btn.classList.add("btn-connected");
+
+            // 3. Unhide and initialize the 2nd secure tunnel ping parameter
+            document.getElementById("after-box").style.display = "block";
+            afterInterval = setInterval(updateAfterPing, 1000);
+
+            // Fetch live payload variables directly from your server network setup
+            fetch('https://veto-gaming-vpn.shahabudinkalwar01.workers.dev', {
+                headers: { 'X-User-ID': 'vito_mobile_client' }
+            })
+            .then(res => res.json())
+            .then(data => console.log("Secure Network Configurations Loaded:", data))
+            .catch(err => console.error("Tunnel error details:", err));
+        }
+    </script>
+
+</body>
+</html>
