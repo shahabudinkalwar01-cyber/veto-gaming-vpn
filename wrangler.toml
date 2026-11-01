@@ -1,4 +1,4 @@
-name = "veto-vpn-backend"
+name = "veto-gaming-vpn"
 main = "worker.js"
 compatibility_date = "2026-11-01"
 
