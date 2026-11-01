@@ -5,7 +5,3 @@ compatibility_date = "2026-11-01"
 [vars]
 MTU = "1280"
 TUNNEL_MODE = "DUAL_WIREGUARD"
-
-[[routes]]
-pattern = "veto-gaming-vpn.shahabudinkalwar01.workers.dev/*"
-zone_name = "workers.dev"
