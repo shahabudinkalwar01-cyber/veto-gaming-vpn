@@ -1,0 +1,7 @@
+name = "veto-vpn-backend"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+MTU = "1280"
+TUNNEL_MODE = "DUAL_WIREGUARD"
