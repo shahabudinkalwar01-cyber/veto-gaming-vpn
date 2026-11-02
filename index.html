@@ -5,103 +5,192 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VITO Gaming VPN</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
         body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
             background: linear-gradient(135deg, #1e3a8a, #0f172a); 
             color: white; 
             text-align: center; 
-            padding: 20px; 
-            margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
         }
-        .container { 
-            background: rgba(30, 41, 59, 0.7); 
-            padding: 30px; 
-            border-radius: 20px; 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+        /* Top Header Navigation Bar (SuperVPN Style) */
+        .header {
+            width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 400px;
-            width: 90%;
-        }
-        h1 { 
-            font-size: 32px; 
-            font-weight: 800; 
-            color: #38bdf8; 
-            margin: 0 0 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            position: relative;
+            font-size: 22px;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        h2 { 
-            font-size: 16px; 
-            font-weight: 600; 
-            color: #f43f5e; 
-            margin: 0 0 25px 0;
+
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Subtitle banner right below header */
+        .subtitle {
+            font-size: 13px;
+            font-weight: 600;
+            color: #f43f5e;
             letter-spacing: 2px;
+            margin-top: 10px;
         }
-        .ping-box {
-            background: rgba(15, 23, 42, 0.6);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 16px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
+
+        /* Main App Interface Layout Container */
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            flex-grow: 1;
+            justify-content: space-around;
         }
-        .ping-value {
+
+        /* Ping Metrics Box Placed at the Top (Replacing Germany/Auto select Pill) */
+        .ping-pill {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: white;
+            border-radius: 30px;
+            padding: 12px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .ping-line {
+            margin: 2px 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .green-text { color: #10b981; font-weight: bold; }
+        .yellow-text { color: #f59e0b; font-weight: bold; }
+
+        /* Centered Dynamic Connection Action Circle */
+        .connection-circle-outer {
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Disconnected State (Image 2 Circle Setup) */
+        .connection-circle-outer.disconnected {
+            border: 14px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(30, 41, 59, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Connected State (Image 1 Circle Setup) */
+        .connection-circle-outer.connected {
+            border: 14px solid #10b981;
+            background-color: rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .connection-text {
+            font-size: 24px;
             font-weight: bold;
-            font-size: 20px;
+            color: #38bdf8;
+            transition: color 0.3s ease;
         }
-        .green-text { color: #10b981; }
-        .yellow-text { color: #f59e0b; }
         
-        .btn-connect { 
-            background: #2563eb; 
-            color: white; 
-            width: 100%; 
-            padding: 15px; 
-            border: none; 
-            border-radius: 12px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            cursor: pointer; 
+        .connection-circle-outer.connected .connection-text {
+            color: #10b981;
+        }
+
+        /* Live Status Text Underneath Panel */
+        .status-label {
+            font-size: 22px;
+            font-weight: bold;
+            color: #38bdf8;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
         }
-        .btn-connect:hover { 
-            background: #1d4ed8;
-            transform: translateY(-2px);
+
+        .status-label.connected-status {
+            color: #10b981;
         }
-        .btn-connected {
-            background: #10b981 !important;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-        }
+
         .footer-info { 
             font-size: 11px; 
             color: #64748b; 
-            margin-top: 20px; 
+            margin-bottom: 20px; 
+            width: 90%;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Top Custom Brand Headings -->
-        <h1>VITO Gaming VPN</h1>
-        <h2>FREE FIRE AND PUBG</h2>
-        
-        <!-- Live Ping System Display -->
-        <div class="ping-box">
-            <div id="before-box">Before Connection Ping: <span id="ping-before" class="green-text">Calculating...</span></div>
-            <div id="after-box" style="display:none; margin-top: 10px;">After Connection Ping: <span id="ping-after" class="yellow-text">Connecting Tunnel...</span></div>
+    <!-- Top Header Navigation Section Bar -->
+    <div class="header">
+        <button class="back-btn">&#8592;</button>
+        <span id="app-title">VITO Gaming VPN</span>
+    </div>
+    
+    <div class="subtitle">FREE FIRE AND PUBG</div>
+
+    <div class="app-container">
+        <!-- Ping Display System repositioned inside the Top Selector Pill -->
+        <div class="ping-pill">
+            <div class="ping-line" id="before-line">
+                <span>Before Connection Ping:</span> 
+                <span id="ping-before" class="green-text">Calculating...</span>
+            </div>
+            <div class="ping-line" id="after-line" style="display:none;">
+                <span>After Connection Ping:</span> 
+                <span id="ping-after" class="yellow-text">Connecting...</span>
+            </div>
         </div>
 
-        <!-- Single Core Action Button -->
-        <button id="connect-btn" class="btn-connect" onclick="startVpnConnection()">CONNECT TO ENGINE</button>
+        <!-- Central Action Target Component Toggle Circle -->
+        <div id="vpn-toggle" class="connection-circle-outer disconnected" onclick="handleVpnToggle()">
+            <span id="circle-action-text" class="connection-text">Connect</span>
+        </div>
 
+        <!-- Informative Connection State Label -->
+        <div id="status-text" class="status-label">Ready</div>
+
+        <!-- Tech Configuration Footer -->
         <div class="footer-info">MTU Optimized: 1280 | Dual-WireGuard Framework Active</div>
     </div>
 
@@ -123,34 +212,63 @@
             document.getElementById("ping-after").innerText = tunnelPing + " ms";
         }
 
-        // Start ping loop as soon as the user opens the app layout
+        // Start initial latency detection loops instantly
         beforeInterval = setInterval(updateBeforePing, 1000);
 
-        function startVpnConnection() {
-            if (isConnected) return;
-            isConnected = true;
+        function handleVpnToggle() {
+            const toggleCircle = document.getElementById('vpn-toggle');
+            const actionText = document.getElementById('circle-action-text');
+            const statusLabel = document.getElementById('status-text');
+            const afterLine = document.getElementById('after-line');
 
-            // 1. Freeze the first ping parameter entirely
-            clearInterval(beforeInterval);
-            
-            // 2. Adjust button styles instantly
-            const btn = document.getElementById("connect-btn");
-            btn.innerText = "VPN IS CONNECTED";
-            btn.classList.add("btn-connected");
+            // Toggle active interface framework state flag
+            if (!isConnected) {
+                isConnected = true;
 
-            // 3. Unhide and initialize the 2nd secure tunnel ping parameter
-            document.getElementById("after-box").style.display = "block";
-            afterInterval = setInterval(updateAfterPing, 1000);
+                // 1. Freeze the baseline reference ping metrics
+                clearInterval(beforeInterval);
+                
+                // 2. Transform the core dial visual anchors
+                toggleCircle.classList.remove('disconnected');
+                toggleCircle.classList.add('connected');
+                actionText.innerText = "Disconnect";
+                
+                statusLabel.innerText = "Connected";
+                statusLabel.classList.add('connected-status');
 
-            // Fetch live payload variables directly from your server network setup
-            fetch('https://veto-gaming-vpn.shahabudinkalwar01.workers.dev', {
-                headers: { 'X-User-ID': 'vito_mobile_client' }
-            })
-            .then(res => res.json())
-            .then(data => console.log("Secure Network Configurations Loaded:", data))
-            .catch(err => console.error("Tunnel error details:", err));
+                // 3. Expose secondary secure tunnel ping calculations inside selection pill
+                afterLine.style.display = "flex";
+                afterInterval = setInterval(updateAfterPing, 1000);
+
+                // Fetch real-time node profiles directly from deployment pipeline worker
+                fetch('https://workers.dev', {
+                    headers: { 'X-User-ID': 'vito_mobile_client' }
+                })
+                .then(res => res.json())
+                .then(data => console.log("Secure Network Configurations Loaded:", data))
+                .catch(err => console.error("Tunnel optimization crash details:", err));
+
+            } else {
+                isConnected = false;
+
+                // Reset calculations and drop runtime loops
+                clearInterval(afterInterval);
+                
+                // Revert dashboard states back to default setup views
+                toggleCircle.classList.remove('connected');
+                toggleCircle.classList.add('disconnected');
+                actionText.innerText = "Connect";
+                
+                statusLabel.innerText = "Ready";
+                statusLabel.classList.remove('connected-status');
+
+                // Collapse secondary ping configurations overlay item
+                afterLine.style.display = "none";
+                
+                // Restart initial state checking sequences
+                beforeInterval = setInterval(updateBeforePing, 1000);
+            }
         }
     </script>
-
 </body>
 </html>
