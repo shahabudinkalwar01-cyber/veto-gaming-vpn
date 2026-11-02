@@ -12,7 +12,6 @@
             font-family: 'Segoe UI', Arial, sans-serif;
         }
         body {
-            /* Changed background gradient to match vibrant heart blue (💙) */
             background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             color: white;
             text-align: center;
@@ -21,19 +20,66 @@
             flex-direction: column;
             align-items: center;
         }
-        /* Main App Interface Layout Container */
+        /* Top Navigation Header Area */
+        .app-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: transparent;
+        }
+        /* Double Length Left Burger Menu Container */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 32px; /* Increased length width */
+            height: 18px;
+            cursor: pointer;
+        }
+        .burger-line {
+            height: 3px;
+            width: 100%;
+            background-color: #000000; /* Pure black */
+            border-radius: 2px;
+        }
+        /* Pure Black Header Icons on Right */
+        .header-icons-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .icon-black {
+            color: #000000; /* Pure black custom fills */
+            font-size: 22px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Custom SVG Share Icon Layer */
+        .share-icon-svg {
+            width: 22px;
+            height: 22px;
+            fill: #000000;
+        }
+        /* Main Layout Content Container */
         .app-container {
             width: 100%;
             max-width: 400px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px 10px 20px;
+            padding: 10px 20px;
             flex-grow: 1;
             justify-content: space-around;
         }
         /* Custom Two-Line Brand Title Hierarchy */
         .brand-container {
+            margin-top: 10px;
             margin-bottom: 5px;
         }
         .title-vito {
@@ -61,13 +107,13 @@
             text-transform: uppercase;
             opacity: 0.9;
         }
-        /* Ping Metrics Box Placed Directly Under Titles */
+        /* Ping Metrics Box Panel */
         .ping-pill {
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            border-radius: 20px;
-            padding: 18px 20px;
+            border-radius: 24px;
+            padding: 18px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -75,17 +121,16 @@
             width: 90%;
             font-size: 15px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
             margin: 15px 0;
         }
         .ping-line {
-            margin: 5px 0;
+            margin: 6px 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
         }
         .green-text {
             color: #10b981;
@@ -95,10 +140,10 @@
             color: #a7f3d0;
             font-weight: bold;
         }
-        /* Minimalist Pure White Center Action Circle Button */
+        /* Master Center Action Circle Button Component */
         .connection-circle-outer {
-            width: 200px;
-            height: 200px;
+            width: 210px;
+            height: 210px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -109,42 +154,62 @@
             -webkit-tap-highlight-color: transparent;
             border: 12px solid #ffffff;
             background-color: transparent;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 25px rgba(255, 255, 255, 0.2);
             margin: 20px 0;
         }
-        /* Solid active states remain matching white style specifications */
         .connection-circle-outer.connected {
             background-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 35px rgba(255, 255, 255, 0.5);
-            border-color: #ffffff;
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.45);
         }
         .connection-text {
             font-size: 24px;
             font-weight: bold;
             color: #ffffff;
         }
-        /* Pure White State Status Text Underneath Panel */
+        /* Pure White Lower Footer Status Text */
         .status-label {
             font-size: 22px;
             font-weight: bold;
             color: #ffffff;
             letter-spacing: 1px;
             margin-top: 5px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Main System Header Row -->
+    <div class="app-header">
+        <!-- 3 Lines: Width extended to double length and made pure black -->
+        <div class="burger-menu">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+        
+        <!-- Header Icons Row: Set to Pure Black -->
+        <div class="header-icons-right">
+            <button class="icon-black" aria-label="Share App">
+                <svg class="share-icon-svg" viewBox="0 0 24 24">
+                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                </svg>
+            </button>
+            <button class="icon-black" aria-label="Notifications">
+                &#128276; <!-- Pure Black Notification Bell Character Element Symbol -->
+            </button>
+        </div>
+    </div>
+
+    <!-- Interface Contents Window Layout Container -->
     <div class="app-container">
-        <!-- Brand Title Stacking Layout -->
         <div class="brand-container">
             <div class="title-vito">VITO</div>
             <div class="title-gaming">Gaming VPN</div>
             <div class="subtitle">Free Fire and PUBG</div>
         </div>
 
-        <!-- Ping System Element Display Panel -->
+        <!-- Ping Real-time Feedback Box Dashboard Elements -->
         <div class="ping-pill">
             <div class="ping-line" id="before-line">
                 <span>Before Connection Ping:</span>
@@ -156,12 +221,11 @@
             </div>
         </div>
 
-        <!-- Master White Circle Functional Button System -->
+        <!-- Central Interactive Toggling Core Switch Circular Framework -->
         <div id="vpn-toggle" class="connection-circle-outer" onclick="handleVpnToggle()">
             <span id="circle-action-text" class="connection-text">Connect</span>
         </div>
 
-        <!-- Static Pure White Informative Footer State Text -->
         <div id="status-text" class="status-label">Ready</div>
     </div>
 
@@ -208,8 +272,8 @@
                     headers: { 'X-User-ID': 'vito_mobile_client' } 
                 })
                 .then(res => res.json())
-                .then(data => console.log("Secure Network Configurations Loaded:", data))
-                .catch(err => console.warn("Tunnel interface active."));
+                .then(data => console.log("Configurations Loaded:", data))
+                .catch(err => console.warn("Tunnel operational metrics monitoring active."));
 
             } else {
                 isConnected = false;
